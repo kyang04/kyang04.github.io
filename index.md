@@ -38,3 +38,50 @@ def load_ipython_extension(ipython):
     # call the default constructor on it.
     ipython.register_magics(MyMagics)
 ```
+
+### 2. Creating a parser from Lezer grammar
+
+This tutorial will cover a grammar for a calculator syntax highlighting. 
+More information on creating your own grammar: https://lezer.codemirror.net/docs/guide/#writing-a-grammar
+
+example.grammar
+```
+@top Program { expression }
+
+expression { Name | Number | BinaryExpression }
+
+BinaryExpression { "(" expression ("+" | "-") expression ")" }
+
+@tokens {
+  Name { @asciiLetter+ }
+  Number { @digit+ }
+}
+```
+To convert this file into a parser, run this command:
+```lezer-generator example.grammar```
+
+Import this parser into the index.ts file
+```import { parser } from "./example.grammar"```
+### 3. Create style tags for grammar
+
+To define syntax highlighting for the tokens defined in your grammar 
+
+```
+import { styleTags, tags as t } from "@lezer/highlight";
+import { HighlightStyle } from "@codemirror/language";
+
+export const hyplHighlight = styleTags({
+  Identifier: t.variableName,
+  Name: t.name,
+  "( )": t.paren,
+  NewExpression: t.modifier
+});
+
+export const hyplHighlightStyle = HighlightStyle.define([
+  { tag: t.variableName, color: "#2689C7" },
+  { tag: t.name, color: "#d90cfe" },
+  { tag: t.modifier, color: "#91041e" },
+]);
+
+export const hyplHighlightExtension = [hyplHighlight, hyplHighlightStyle];
+```
