@@ -123,7 +123,7 @@ export function Hypl() {
 }
 ```
 
-#### 4. Packaging your syntax highlighting 
+### 4. Packaging your syntax highlighting 
 
 We will be using rollup to distrbiute syntax highlighting. 
 Crete a package.json file with the following structure and run ```npm install``` at the top level of your repo
@@ -169,7 +169,7 @@ Run ```npx rollup -c``` in your src folder to package your parser and highlighti
 
 You should now have a dist folder.
 
-#### 5. Creating a Jupyter Extension
+### 5. Creating a Jupyter Extension
 
 We will create a jupyter extension to deploy the syntax highlighting 
 
@@ -183,7 +183,7 @@ copier copy --trust https://github.com/jupyterlab/extension-template .
 
 You now have a template for a jupyter extension
 
-#### 6. Installing CodeMirror syntax highlighting as a dependency
+### 6. Installing CodeMirror syntax highlighting as a dependency
 
 Create a makefile with the following structure 
 
@@ -228,7 +228,7 @@ To install your codemirror extension into this jupyter extension, you will run m
 Whenever you make changes to your codemirror extension, always be sure to run make clean and make build again
 to see your updates in Jupyter Notebook
 
-#### 7. Limiting syntax highlighting to cell magics
+### 7. Limiting syntax highlighting to cell magics
 
 To prevent your custom syntax highlighting from applying to your entire notebook, you will need to 
 ensure that the codemirror syntax only takes effect when your cell magic is present
