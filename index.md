@@ -1,22 +1,58 @@
 This is a tutorial on creating syntax highlighting for cell magics in Jupyter Notebook. 
 
 ---
+### Initial setup
+
+Begin by creating a new repository on GitHub.
+At the top level, create a Python virtual environment 
+```python3 -m venv venv```
+
+Activate environment ```source venv/bin/activate``` and create a pyproject.toml with the following dependencies
+
+```
+[tool.poetry]
+name = "your_repo"
+version = "0.1.0"
+description = ""
+authors = [" <your.email@example.com>"]
+packages = [
+    { include = "your_package"}
+]
+
+[tool.poetry.dependencies]
+python = "3.11.x"
+ipython = "^7.0"
+notebook = "^7.0"
+jupyter = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+```
 
 ### 1. Creating a custom cell magic
+
+Create a folder with a file of the same name ```cell_magic/cell_magic.py```
+Create an __init__.py file that contains 
+```
+from .echo_append import load_ipython_extension
+```
+
+Your cell_magic.py file is where you will define the behavior of your cell magic
 
 Cell magics are additional functions that extend the functionality of notebooks by creating custom behavior for cells
 
 #### Importing Modules
 
 
-
+cell_magic.py
 ```
 from IPython.core.magic import Magics, magics_class, cell_magic
 from IPython import get_ipython
 ```
 
 #### Define and Register Magic
-
+cell_magic.py
 ```
 @magics_class
 class MyMagics(Magics):
