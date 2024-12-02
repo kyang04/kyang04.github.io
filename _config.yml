@@ -34,9 +34,9 @@ plugins:
 #   strip_title: true
 #   collections: true
 
-defaults:
-  - scope:
-      path: ""
-      type: post
-    values:
-      tags: Other
+# defaults:
+#   - scope:
+#       path: ""
+#       type: post
+#     values:
+#       tags: Other
