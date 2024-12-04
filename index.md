@@ -77,7 +77,7 @@ def load_ipython_extension(ipython):
 
 ### 2. Creating a parser from Lezer grammar
 
-This tutorial will cover a grammar for a calculator syntax highlighting. 
+This tutorial will cover grammar for calculator syntax highlighting. 
 More information on creating your own grammar: https://lezer.codemirror.net/docs/guide/#writing-a-grammar
 
 src/example.grammar
@@ -161,8 +161,8 @@ export function Hypl() {
 
 ### 4. Packaging your syntax highlighting 
 
-We will be using rollup to distrbiute syntax highlighting. 
-Crete a package.json file with the following structure and run ```npm install``` at the top level of your repo
+We will be using rollup to distribute syntax highlighting. 
+Create a package.json file with the following structure and run ```npm install``` at the top level of your repo
 
 ```
 {
@@ -293,13 +293,11 @@ function yourSyntaxExtension(): Extension {
 }
 ```
 
-The code snippet above choose syntax highlighting based on whether the ```%%calculator``` cell magic is present
-If so, the syntax highlighting you;ve defined will appear, else it will continue to use python highlighting
+The code snippet above chooses syntax highlighting based on whether the ```%%calculator``` cell magic is present
+If so, the syntax highlighting you've defined will appear, else it will continue to use Python highlighting
 
-The following code registers your codemirror highlighting into jupyter notebook
+The following code registers your code mirror highlighting into jupyter notebook
 ```
- * Initialization data for the @jupyterlab-examples/codemirror-extension extension.
- */
 const plugin: JupyterFrontEndPlugin<void> = {
   id: "@jupyterlab-examples/codemirror-extension:plugin",
   description: "A JupyterLab extension adding Hypl syntax highlighting.",
