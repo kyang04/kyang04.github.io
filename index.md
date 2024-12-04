@@ -74,8 +74,11 @@ def load_ipython_extension(ipython):
     # call the default constructor on it.
     ipython.register_magics(MyMagics)
 ```
+You should now have a functional cell magic that be loaded and executed 
+using ```%load_ext cell_magic``` and ```%%cmagic```
 
 ### 2. Creating a parser from Lezer grammar
+
 
 This tutorial will cover grammar for calculator syntax highlighting. 
 More information on creating your own grammar: https://lezer.codemirror.net/docs/guide/#writing-a-grammar
