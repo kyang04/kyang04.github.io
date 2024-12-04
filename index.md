@@ -77,6 +77,8 @@ def load_ipython_extension(ipython):
 You should now have a functional cell magic that be loaded and executed 
 using ```%load_ext cell_magic``` and ```%%cmagic```
 
+Your file structure should look something like this
+Screenshot 2024-12-04 162426.jpg
 ### 2. Creating a parser from Lezer grammar
 
 
