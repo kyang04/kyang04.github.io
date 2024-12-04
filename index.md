@@ -32,13 +32,13 @@ build-backend = "poetry.core.masonry.api"
 
 ### 1. Creating a custom cell magic
 
-Create a folder with a file of the same name ```cell_magic/cell_magic.py```
+Create a folder with a file of the same name ```calculator/calculator.py```
 Create an __init__.py file that contains 
 ```
 from .echo_append import load_ipython_extension
 ```
 
-Your cell_magic.py file is where you will define the behavior of your cell magic
+Your calculator.py file is where you will define the behavior of your cell magic
 
 Cell magics are additional functions that extend the functionality of notebooks by creating custom behavior for cells
 
@@ -52,14 +52,15 @@ from IPython import get_ipython
 ```
 
 #### Define and Register Magic
-cell_magic.py
+calculator.py
 ```
 @magics_class
 class MyMagics(Magics):
     @cell_magic
-    def cmagic(self, line, cell):
-        "my cell magic"
-        return line, cell
+    def calculator(self, line, cell):
+        expression = cell.strip()
+        result = eval(expression)  
+        print(f"{expression} = {result}")  
 
 # In order to actually use these magics, you must register them with a
 # running IPython.
@@ -75,7 +76,10 @@ def load_ipython_extension(ipython):
     ipython.register_magics(MyMagics)
 ```
 You should now have a functional cell magic that be loaded and executed 
-using ```%load_ext cell_magic``` and ```%%cmagic```
+using ```%load_ext calculator``` and ```%%calculator```
+
+![image](https://github.com/user-attachments/assets/f5e40287-777a-4028-8d79-e7d4d4604632)
+
 
 Your file structure should look something like this
 ![image](https://github.com/user-attachments/assets/6dd3adaa-83b8-4d63-beb3-7a7d325fbeee)
