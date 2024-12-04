@@ -82,7 +82,7 @@ Your file structure should look something like this
 
 ### 2. Creating a parser from Lezer grammar
 
-
+Create a new repo separate from the one above
 This tutorial will cover grammar for calculator syntax highlighting. 
 More information on creating your own grammar: https://lezer.codemirror.net/docs/guide/#writing-a-grammar
 
