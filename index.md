@@ -78,7 +78,8 @@ You should now have a functional cell magic that be loaded and executed
 using ```%load_ext cell_magic``` and ```%%cmagic```
 
 Your file structure should look something like this
-Screenshot 2024-12-04 162426.jpg
+![image](https://github.com/user-attachments/assets/6dd3adaa-83b8-4d63-beb3-7a7d325fbeee)
+
 ### 2. Creating a parser from Lezer grammar
 
 
