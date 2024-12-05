@@ -195,6 +195,9 @@ You should now have a dist folder.
 
 To test your syntax highlighting, ```npm run dev``` will allow you to open a browser to write text.
 
+Hypl syntax highlighting example:
+![image](https://github.com/user-attachments/assets/7d25f7d3-7aed-45f0-a188-aa7f32eb8563)
+
 
 ### 5. Creating a Jupyter Extension
 
