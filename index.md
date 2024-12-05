@@ -33,7 +33,7 @@ build-backend = "poetry.core.masonry.api"
 ### 1. Creating a custom cell magic
 
 Create a folder with a file of the same name ```calculator/calculator.py```
-Create an __init__.py file that contains 
+Create an ```__init__.py``` file that contains 
 ```
 from .echo_append import load_ipython_extension
 ```
