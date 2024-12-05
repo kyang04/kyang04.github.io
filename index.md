@@ -32,6 +32,7 @@ build-backend = "poetry.core.masonry.api"
 
 ### 1. Creating a custom cell magic
 
+We will create a basic cell magic that computes simple arithmetic functions
 Create a folder with a file of the same name ```calculator/calculator.py```
 Create an ```__init__.py``` file that contains 
 ```
@@ -86,36 +87,49 @@ Your file structure should look something like this
 
 ### 2. Creating a parser from Lezer grammar
 
-Create a new repo separate from the one above
-This tutorial will cover grammar for calculator syntax highlighting. 
-More information on creating your own grammar: https://lezer.codemirror.net/docs/guide/#writing-a-grammar
+To create the parser for the Lezer grammar, I recommend making a separate GitHub repo which you will later install in the Jupyter extension
+Begin by cloning this repo: https://github.com/kyang04/example_code_mirror_highlighting 
 
-src/example.grammar
+After installing the necessary dependencies, navigate to the 
+src/syntax.grammar
 ```
-@top Program { expression }
+@top Program { expression* }
 
-expression { Name | Number | BinaryExpression }
+expression {
+  Identifier |
+  Name |
+  Application { "(" expression* ")" }
+}
 
-BinaryExpression { "(" expression ("+" | "-") expression ")" }
+NewExpression { @specialize<Identifier, "int"> expression }
 
 @tokens {
-  Name { @asciiLetter+ }
-  Number { @digit+ }
+  Identifier { $[a-z] $[a-zA-Z0-9_]* } 
+  Name { $[A-Z] $[a-zA-Z0-9_]* } 
+}
+
+@skip {
+  NewExpression
+}
+
+@detectDelim
 }
 ```
-To convert this file into a parser, run this command:
+This is an example ```.grammar```, modify this file to create a grammar of your specifications.
+Documentation for creating your own lezer grammar can be found here: https://lezer.codemirror.net/docs/guide/#writing-a-grammar
+
+After making all your changes to the grammar file run this command to convert it into a parser:
 ```lezer-generator src/example.grammar -o parser.js```
 
-You should now see a file in your src folder called parser.js
+You should now see a file in your src folder called parser.js containing the information from the .grammar file
 
-Import this parser into the index.ts file
-```import { parser } from "./example.grammar"```
 ### 3. Create style tags for grammar
 
 To define syntax highlighting for the tokens defined in your grammar, you have to assign each token
 defined in your grammar with a variable
 
-highlight.ts
+
+Navigate to ```src/highlight.ts```
 ```
 import { styleTags, tags as t } from "@lezer/highlight";
 import { HighlightStyle } from "@codemirror/language";
@@ -126,11 +140,7 @@ export const hyplHighlight = styleTags({
   "( )": t.paren,
   NewExpression: t.modifier
 });
-```
 
-Next you will assign each variable a specific color to identify each token
-
-```
 export const hyplHighlightStyle = HighlightStyle.define([
   { tag: t.variableName, color: "#2689C7" },
   { tag: t.name, color: "#d90cfe" },
@@ -139,6 +149,10 @@ export const hyplHighlightStyle = HighlightStyle.define([
 
 export const hyplHighlightExtension = [hyplHighlight, hyplHighlightStyle];
 ```
+```Hypl``` is the name of the language in this example repo, change this to your desired name.
+In ```hyplHighlight```, each token/expression declared in the ```.grammar``` is assigned a styleTag, e.g t.variableName.
+Be sure to assign every token/expression to a styleTag
+In ```hyplHighlightStyle```, each tag is associated with a unique color in hex code. Choose a color for each tag
 
 Import your custom highlighting into your index.ts file and export your syntax highlighting
 
@@ -169,51 +183,18 @@ export function Hypl() {
 }
 ```
 
-### 4. Packaging your syntax highlighting 
+(Hypl should be replaced with the name of your language)
+
+### 4. Testing and packaging your syntax highlighting 
 
 We will be using rollup to distribute syntax highlighting. 
-Create a package.json file with the following structure and run ```npm install``` at the top level of your repo
 
-```
-{
-    "name": "your_highlighting",
-    "private": false,
-    "type": "module",
-    "version": "0.0.1",
-    "repository": {
-        "type": "git",
-        "url": "name_of_github_repo"
-    },
-    "scripts": {
-        "dev": "vite serve dist",
-        "build": "tsc && npx rollup -c && vite build",
-        "preview": "vite preview",
-        "package": "npx rollup -c && git add dist/*"
-    },
-    "files": [
-        "src/*",
-        "dist/*"
-    ],
-    "main": "dist/main.js",
-    "devDependencies": {
-        "@lezer/generator": "^1.7.1",
-        "mocha": "^9.0.1",
-        "rollup": "^2.60.2",
-        "rollup-plugin-dts": "^4.0.1",
-        "rollup-plugin-ts": "^3.0.2",
-        "typescript": "^4.9.3",
-        "vite": "^4.0.0"
-    },
-    "dependencies": {
-        "@codemirror/lang-javascript": "^6.2.2",
-        "codemirror": "^6.0.1"
-    }
-}
-
-```
 Run ```npx rollup -c``` in your src folder to package your parser and highlighting together 
 
 You should now have a dist folder.
+
+To test your syntax highlighting, ```npm run dev``` will allow you to open a browser to write text.
+
 
 ### 5. Creating a Jupyter Extension
 
