@@ -45,7 +45,7 @@ Cell magics are additional functions that extend the functionality of notebooks 
 #### Importing Modules
 
 
-cell_magic.py
+calculator.py
 ```
 from IPython.core.magic import Magics, magics_class, cell_magic
 from IPython import get_ipython
